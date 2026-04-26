@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bg_dark">#080f14</color>
+    <color name="bg_panel">#111827</color>
+    <color name="bg_card">#161d2e</color>
+    <color name="border">#1e2a3a</color>
+    <color name="green_light">#4ade80</color>
+    <color name="green_dark">#16a34a</color>
+    <color name="mint">#d1fae5</color>
+    <color name="teal">#2dd4bf</color>
+    <color name="teal_dark">#0d9488</color>
+    <color name="amber">#f59e0b</color>
+    <color name="violet">#a78bfa</color>
+    <color name="text_primary">#e2edf5</color>
+    <color name="text_sub">#7a9ab8</color>
+    <color name="text_muted">#4d6580</color>
+    <color name="error_red">#f87171</color>
+    <color name="colorPrimary">#2dd4bf</color>
+    <color name="colorPrimaryDark">#0d9488</color>
+    <color name="colorAccent">#4ade80</color>
+</resources>
