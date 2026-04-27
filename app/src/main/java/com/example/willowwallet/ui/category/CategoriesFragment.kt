@@ -5,15 +5,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.willowwallet.MainActivity
+import com.example.willowwallet.R
 import com.example.willowwallet.data.entities.Category
 import com.example.willowwallet.databinding.FragmentCategoriesBinding
-import com.example.willowwallet.utils.SessionManager
 import com.example.willowwallet.viewmodel.CategoryViewModel
 import com.example.willowwallet.viewmodel.ViewModelFactory
 
@@ -21,7 +22,6 @@ class CategoriesFragment : Fragment() {
     private var _binding: FragmentCategoriesBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: CategoryViewModel
-    private lateinit var session: SessionManager
     private lateinit var adapter: CategoryAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -31,32 +31,41 @@ class CategoriesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val mainActivity = requireActivity() as MainActivity
-        session = mainActivity.sessionManager
-        viewModel = ViewModelProvider(this, ViewModelFactory(mainActivity.repository))[CategoryViewModel::class.java]
-        viewModel.setUserId(session.getUserId())
 
-        adapter = CategoryAdapter(
-            emptyList(),
-            onEdit = { openEditScreen(it) },
-            onDelete = { confirmDelete(it) }
-        )
-        binding.rvCategories.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvCategories.adapter = adapter
+        try {
+            val mainActivity = requireActivity() as MainActivity
+            val userId = mainActivity.sessionManager.getUserId()
 
-        viewModel.categories.observe(viewLifecycleOwner) { cats ->
-            adapter.updateData(cats)
-            binding.tvEmpty.visibility = if (cats.isEmpty()) View.VISIBLE else View.GONE
-        }
+            viewModel = ViewModelProvider(this, ViewModelFactory(mainActivity.repository))[CategoryViewModel::class.java]
+            viewModel.setUserId(userId)
 
-        viewModel.deleteResult.observe(viewLifecycleOwner) { result ->
-            result ?: return@observe
-            Toast.makeText(requireContext(), "Category deleted", Toast.LENGTH_SHORT).show()
-            viewModel.resetDeleteResult()
-        }
+            adapter = CategoryAdapter(
+                emptyList(),
+                onEdit = { openEditScreen(it) },
+                onDelete = { confirmDelete(it) }
+            )
+            binding.rvCategories.layoutManager = LinearLayoutManager(requireContext())
+            binding.rvCategories.adapter = adapter
 
-        binding.fabAddCategory.setOnClickListener {
-            startActivity(Intent(requireContext(), AddCategoryActivity::class.java))
+            viewModel.categories.observe(viewLifecycleOwner) { cats ->
+                val categoryList = cats ?: emptyList()
+                adapter.updateData(categoryList)
+                binding.tvEmpty.visibility = if (categoryList.isEmpty()) View.VISIBLE else View.GONE
+            }
+
+            viewModel.deleteResult.observe(viewLifecycleOwner) { result ->
+                result ?: return@observe
+                Toast.makeText(requireContext(), "Category deleted", Toast.LENGTH_SHORT).show()
+                viewModel.resetDeleteResult()
+            }
+
+            binding.fabAddCategory.setOnClickListener {
+                startActivity(Intent(requireContext(), AddCategoryActivity::class.java))
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            binding.tvEmpty.text = "Error: ${e.message}"
+            binding.tvEmpty.visibility = View.VISIBLE
         }
     }
 
@@ -72,34 +81,36 @@ class CategoriesFragment : Fragment() {
     }
 
     private fun confirmDelete(category: Category) {
-        val dialogView = LayoutInflater.from(requireContext())
-            .inflate(com.example.willowwallet.R.layout.dialog_delete_confirm, null)
+        try {
+            val dialogView = LayoutInflater.from(requireContext())
+                .inflate(R.layout.dialog_delete_confirm, null)
 
-        val tvMessage = dialogView.findViewById<android.widget.TextView>(com.example.willowwallet.R.id.tv_delete_message)
-        tvMessage.text = "Delete '${category.name}'?\n\nExpenses in this category will become uncategorized."
+            val tvMessage = dialogView.findViewById<TextView>(R.id.tv_delete_message)
+            tvMessage.text = "Delete '${category.name}'?\n\nExpenses in this category will become uncategorized."
 
-        val dialog = androidx.appcompat.app.AlertDialog.Builder(requireContext())
-            .setView(dialogView)
-            .create()
+            val dialog = AlertDialog.Builder(requireContext())
+                .setView(dialogView)
+                .create()
 
-        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
-        dialogView.findViewById<android.widget.TextView>(com.example.willowwallet.R.id.btn_cancel_delete).setOnClickListener {
-            dialog.dismiss()
+            dialogView.findViewById<TextView>(R.id.btn_cancel_delete).setOnClickListener {
+                dialog.dismiss()
+            }
+
+            dialogView.findViewById<TextView>(R.id.btn_confirm_delete).setOnClickListener {
+                viewModel.deleteCategory(category)
+                dialog.dismiss()
+            }
+
+            dialog.show()
+        } catch (e: Exception) {
+            Toast.makeText(requireContext(), "Error: ${e.message}", Toast.LENGTH_SHORT).show()
         }
-
-        dialogView.findViewById<android.widget.TextView>(com.example.willowwallet.R.id.btn_confirm_delete).setOnClickListener {
-            viewModel.deleteCategory(category)
-            dialog.dismiss()
-        }
-
-        dialog.show()
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.setUserId(session.getUserId())
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
-
-    override fun onDestroyView() { super.onDestroyView(); _binding = null }
 }

@@ -6,6 +6,11 @@
         <item name="colorOnPrimary">#031918</item>
         <item name="colorSecondary">#4ade80</item>
         <item name="colorOnSecondary">#0a1f0e</item>
+
+        <!-- Required by BottomNavigationView — without these it crashes -->
+        <item name="colorSurface">#111827</item>
+        <item name="colorOnSurface">#7a9ab8</item>
+
         <item name="android:colorBackground">#080f14</item>
         <item name="android:statusBarColor">#080f14</item>
         <item name="android:navigationBarColor">#060d12</item>
