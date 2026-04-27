@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.WillowWallet" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#2dd4bf</item>
+        <item name="colorPrimaryVariant">#0d9488</item>
+        <item name="colorOnPrimary">#031918</item>
+        <item name="colorSecondary">#4ade80</item>
+        <item name="colorOnSecondary">#0a1f0e</item>
+
+        <!-- Required by BottomNavigationView — without these it crashes -->
+        <item name="colorSurface">#111827</item>
+        <item name="colorOnSurface">#7a9ab8</item>
+
+        <item name="android:colorBackground">#080f14</item>
+        <item name="android:statusBarColor">#080f14</item>
+        <item name="android:navigationBarColor">#060d12</item>
+        <item name="android:textColorPrimary">#e2edf5</item>
+        <item name="android:textColorSecondary">#7a9ab8</item>
+        <item name="android:windowBackground">#080f14</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+</resources>
