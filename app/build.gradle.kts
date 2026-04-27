@@ -62,5 +62,4 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.room.testing)
-    implementation("com.google.android.material:material:1.9.0")
 }

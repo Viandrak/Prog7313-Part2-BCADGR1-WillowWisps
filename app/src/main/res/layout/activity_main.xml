@@ -3,69 +3,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#080F14">
+    android:background="#080f14">
 
+    <!-- Fragment container — Person 3 will replace this whole file with bottom nav -->
     <FrameLayout
         android:id="@+id/main_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
 
+    <!-- Temporary nav strip — Person 3 will remove this -->
     <LinearLayout
+        android:id="@+id/tempNavBar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:orientation="horizontal"
-        android:background="#111827">
+        android:background="#111c26">
 
         <Button
-            android:id="@+id/btn_nav_home"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Home"
-            android:textSize="11sp"
-            android:textColor="#2dd4bf"
-            android:background="@android:color/transparent" />
-
-        <Button
-            android:id="@+id/btn_nav_add"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Add"
-            android:textSize="11sp"
-            android:textColor="#7A9AB8"
-            android:background="@android:color/transparent" />
-
-        <Button
-            android:id="@+id/btn_nav_categories"
+            android:id="@+id/btnNavCategories"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="Categories"
             android:textSize="11sp"
-            android:textColor="#7A9AB8"
+            android:textColor="#4ADE80"
             android:background="@android:color/transparent" />
 
         <Button
-            android:id="@+id/btn_nav_reports"
+            android:id="@+id/btnNavExpenses"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Reports"
+            android:text="Expenses"
             android:textSize="11sp"
-            android:textColor="#7A9AB8"
-            android:background="@android:color/transparent" />
-
-        <Button
-            android:id="@+id/btn_nav_goals"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Goals"
-            android:textSize="11sp"
-            android:textColor="#7A9AB8"
+            android:textColor="#9BA8B5"
             android:background="@android:color/transparent" />
 
     </LinearLayout>
+
 </LinearLayout>

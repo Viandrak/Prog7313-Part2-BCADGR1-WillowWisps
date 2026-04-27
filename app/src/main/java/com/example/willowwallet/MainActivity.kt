@@ -8,28 +8,21 @@ import com.example.willowwallet.data.db.WillowDatabase
 import com.example.willowwallet.data.repository.WillowRepository
 import com.example.willowwallet.ui.category.CategoriesFragment
 import com.example.willowwallet.ui.expense.ExpenseListFragment
-import com.example.willowwallet.ui.goals.GoalsFragment
-import com.example.willowwallet.ui.home.HomeFragment
-import com.example.willowwallet.ui.reports.ReportsFragment
 import com.example.willowwallet.utils.SessionManager
 
 class MainActivity : AppCompatActivity() {
 
-    // Make these public so fragments can access them
     lateinit var repository: WillowRepository
     lateinit var sessionManager: SessionManager
 
-    private lateinit var btnHome: Button
-    private lateinit var btnAdd: Button
+    // Temp nav buttons — Person 3 will remove these when adding bottom nav
     private lateinit var btnCategories: Button
-    private lateinit var btnReports: Button
-    private lateinit var btnGoals: Button
+    private lateinit var btnExpenses:   Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Initialize sessionManager and repository
         sessionManager = SessionManager(this)
         val db = WillowDatabase.getInstance(this)
         repository = WillowRepository(
@@ -39,24 +32,31 @@ class MainActivity : AppCompatActivity() {
             db.budgetGoalDao()
         )
 
-        btnHome = findViewById(R.id.btn_nav_home)
-        btnAdd = findViewById(R.id.btn_nav_add)
-        btnCategories = findViewById(R.id.btn_nav_categories)
-        btnReports = findViewById(R.id.btn_nav_reports)
-        btnGoals = findViewById(R.id.btn_nav_goals)
+        btnCategories = findViewById(R.id.btnNavCategories)
+        btnExpenses   = findViewById(R.id.btnNavExpenses)
 
-        btnHome.setOnClickListener { loadFragment(HomeFragment()) }
-        btnAdd.setOnClickListener { loadFragment(ExpenseListFragment()) }
-        btnCategories.setOnClickListener { loadFragment(CategoriesFragment()) }
-        btnReports.setOnClickListener { loadFragment(ReportsFragment()) }
-        btnGoals.setOnClickListener { loadFragment(GoalsFragment()) }
+        btnCategories.setOnClickListener { showFragment(CategoriesFragment(), isExpenses = false) }
+        btnExpenses.setOnClickListener   { showFragment(ExpenseListFragment(), isExpenses = true) }
 
-        loadFragment(HomeFragment())
+        // Start on Categories (Person 1's default)
+        if (savedInstanceState == null) {
+            showFragment(CategoriesFragment(), isExpenses = false)
+        }
     }
 
-    private fun loadFragment(fragment: Fragment) {
+    private fun showFragment(fragment: Fragment, isExpenses: Boolean) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.main_container, fragment)
             .commit()
+
+        // Highlight active tab
+        btnCategories.setTextColor(
+            if (!isExpenses) getColor(android.R.color.holo_green_light)
+            else android.graphics.Color.parseColor("#9BA8B5")
+        )
+        btnExpenses.setTextColor(
+            if (isExpenses) getColor(android.R.color.holo_green_light)
+            else android.graphics.Color.parseColor("#9BA8B5")
+        )
     }
 }
