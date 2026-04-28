@@ -13,6 +13,65 @@ import com.example.willowwallet.ui.home.HomeFragment
 import com.example.willowwallet.ui.reports.ReportsFragment
 import com.example.willowwallet.utils.SessionManager
 
+/**
+ *
+ * REFERENCES:
+ *
+ * 1. Room Database for data persistence:
+ *    Android Developers, 2025. Room persistence library. [Online]
+ *    Available at: https://developer.android.com/training/data-storage/room
+ *    [Accessed 25 April 2026].
+ *
+ * 2. ViewModel for managing UI data:
+ *    Android Developers, 2024. ViewModel overview. [Online]
+ *    Available at: https://developer.android.com/topic/libraries/architecture/viewmodel
+ *    [Accessed 25 April 2026].
+ *
+ * 3. Glide for image loading:
+ *    Bumptech, 2025. Glide image loading library. [Online]
+ *    Available at: https://bumptech.github.io/glide/
+ *    [Accessed 26 April 2026].
+ *
+ * 4. Camera functionality for receipt photos:
+ *    Android Developers, 2024. Take photos. [Online]
+ *    Available at: https://developer.android.com/media/camera/get-started-with-camera
+ *    [Accessed 26 April 2026].
+ *
+ * 5. Kotlin programming language:
+ *    JetBrains, 2025. Kotlin documentation. [Online]
+ *    Available at: https://blog.jetbrains.com/kotlin/2025/12/kotlin-2-3-0-released/
+ *    [Accessed 27 April 2026].
+ *
+ * 6. Kotlin Coroutines for asynchronous operations:
+ *    Android Developers, 2024. Kotlin coroutines on Android. [Online]
+ *    Available at: https://developer.android.com/kotlin/coroutines
+ *    [Accessed 27 April 2026].
+ *
+ * 7. GitHub Actions for automated testing:
+ *    GitHub Actions, 2025. Automating builds and tests. [Online]
+ *    Available at: https://docs.github.com/en/actions/tutorials/build-and-test-code
+ *    [Accessed 27 April 2026].
+ *
+ * 8. SeekBar for budget goal sliders:
+ *    GeeksforGeeks, 2019. SeekBar in Kotlin. [Online]
+ *    Available at: https://www.geeksforgeeks.org/kotlin/seekbar-in-kotlin/
+ *    [Accessed 28 April 2026].
+ *
+ * 9. LinearLayout for button navigation bar:
+ *    Android Developers, n.d. LinearLayout. [Online]
+ *    Available at: https://developer.android.com/reference/android/widget/LinearLayout
+ *    [Accessed 28 April 2026].
+ *
+ * 10. MaterialDatePicker for date range selection:
+ *     Android Developers, 2025. MaterialDatePicker.Builder API reference. [Online]
+ *     Available at: https://developer.android.com/reference/com/google/android/material/datepicker/MaterialDatePicker.Builder
+ *     [Accessed 28 April 2026].
+ *
+ * 11. Fragment transactions for screen navigation:
+ *     Android Developers, 2024. Fragments. [Online]
+ *     Available at: https://developer.android.com/guide/fragments
+ *     [Accessed 28 April 2026].
+ */
 class MainActivity : AppCompatActivity() {
 
     // Make these public so fragments can access them
